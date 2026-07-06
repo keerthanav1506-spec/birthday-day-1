@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Week of Prithinga's Birthday</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Quicksand:wght@400;500;600;700&display=swap');
+
+:root{
+  --cream: #FFF6F4;
+  --blush: #FFDCE4;
+  --blush-deep: #F7B8CB;
+  --rose: #E1577D;
+  --rose-dark: #B83A5C;
+  --wine: #8C2F49;
+  --gold: #D9A65C;
+  --plum: #4A2A38;
+  --plum-soft: #8A5F6D;
+}
+
+*{ box-sizing:border-box; }
+
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100vh;
+  background: radial-gradient(ellipse at 18% 12%, var(--blush) 0%, transparent 55%),
+              radial-gradient(ellipse at 85% 85%, var(--blush-deep) 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 50%, #fff 0%, var(--cream) 70%);
+  font-family:'Quicksand', sans-serif;
+  color: var(--plum);
+  overflow-x:hidden;
+}
+
+/* floating decorations */
+.float-deco{
+  position:fixed;
+  pointer-events:none;
+  opacity:0.6;
+  filter: drop-shadow(0 4px 8px rgba(140,47,73,0.10));
+  animation: drift 14s ease-in-out infinite;
+  z-index:1;
+}
+.d1{ top:8%; left:7%; font-size:32px; animation-delay:0s; }
+.d2{ top:72%; left:10%; font-size:24px; animation-delay:2s; }
+.d3{ top:14%; right:9%; font-size:30px; animation-delay:4s; }
+.d4{ bottom:8%; right:12%; font-size:36px; animation-delay:1s; }
+.d5{ top:46%; left:4%; font-size:20px; animation-delay:3s; }
+.d6{ top:36%; right:5%; font-size:22px; animation-delay:5s; }
+.d7{ top:4%; left:44%; font-size:18px; animation-delay:2.6s; }
+.d8{ bottom:4%; left:42%; font-size:26px; animation-delay:1.6s; }
+
+@keyframes drift{
+  0%,100%{ transform: translateY(0) rotate(0deg); }
+  50%{ transform: translateY(-16px) rotate(7deg); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .float-deco{ animation: none; }
+}
+
+.wrap{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding: 36px 20px;
+  position:relative;
+  z-index:2;
+}
+
+.eyebrow{
+  font-size:12.5px;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color: var(--rose-dark);
+  font-weight:700;
+  margin-bottom:16px;
+  text-align:center;
+}
+.eyebrow .heart{ color: var(--wine); }
+
+.title-main{
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-weight:600;
+  font-size:clamp(21px, 3.6vw, 31px);
+  line-height:1.45;
+  text-align:center;
+  color: var(--wine);
+  margin: 0 0 8px 0;
+  max-width: 500px;
+}
+
+.subtitle{
+  text-align:center;
+  color: var(--plum-soft);
+  font-size:15px;
+  margin-bottom:32px;
+  font-weight:500;
+}
+
+/* candle progress track */
+.candles{
+  display:flex;
+  gap:6px;
+  margin-bottom:34px;
+  flex-wrap:wrap;
+  justify-content:center;
+  max-width:420px;
+}
+.candle{
+  width:8px;
+  height:26px;
+  border-radius:4px 4px 2px 2px;
+  background: #F3D9DC;
+  position:relative;
+  transition: background 0.4s ease, transform 0.4s ease;
+}
+.candle::before{
+  content:'';
+  position:absolute;
+  top:-8px;
+  left:50%;
+  transform: translateX(-50%);
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background: transparent;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+.candle.lit{
+  background: linear-gradient(180deg, var(--rose) 0%, var(--gold) 100%);
+  transform: scaleY(1.08);
+}
+.candle.lit::before{
+  background: #FFD98A;
+  box-shadow: 0 0 8px 3px rgba(255, 200, 100, 0.85);
+}
+
+/* card stage */
+.stage{
+  perspective: 1400px;
+  width: min(92vw, 480px);
+  height: 360px;
+  position:relative;
+}
+
+.card{
+  position:absolute;
+  inset:0;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #FFFDFC 0%, #FFF6F8 100%);
+  border: 1px solid rgba(184, 58, 92, 0.20);
+  box-shadow: 0 22px 50px -18px rgba(140, 47, 73, 0.30), 0 2px 10px rgba(140,47,73,0.08);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding: 40px 36px;
+  text-align:center;
+  backface-visibility:hidden;
+  transition: transform 0.55s cubic-bezier(.4,.1,.2,1), opacity 0.4s ease;
+}
+.card::before{
+  content:'';
+  position:absolute;
+  inset:10px;
+  border-radius:16px;
+  border: 1px dashed rgba(184,58,92,0.18);
+  pointer-events:none;
+}
+
+.card.entering{
+  animation: cardIn 0.5s cubic-bezier(.2,.7,.3,1);
+}
+@keyframes cardIn{
+  from{ transform: rotateY(14deg) translateX(40px) scale(0.94); opacity:0; }
+  to{ transform: none; opacity:1; }
+}
+
+.card-number{
+  font-family:'Playfair Display', serif;
+  font-size:13.5px;
+  color: var(--gold);
+  letter-spacing:0.14em;
+  margin-bottom:20px;
+  font-weight:600;
+}
+.card-number .rose-ico{ margin: 0 6px; }
+
+.card-reason{
+  font-family:'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(19px, 3.9vw, 24px);
+  line-height:1.55;
+  color: var(--plum);
+  min-height: 3.6em;
+}
+
+.card-reason .because{
+  display:block;
+  font-family:'Quicksand', sans-serif;
+  font-style:normal;
+  font-size:12px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color: var(--rose-dark);
+  margin-bottom:12px;
+  font-weight:700;
+}
+
+.cursor{
+  display:inline-block;
+  width:2px;
+  background: var(--rose-dark);
+  margin-left:2px;
+  animation: blink 0.8s steps(1) infinite;
+}
+@keyframes blink{ 50%{ opacity:0; } }
+
+/* final card */
+.final-icon{
+  font-size:40px;
+  margin-bottom:16px;
+}
+.final-heading{
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-size:23px;
+  margin-bottom:12px;
+  color: var(--wine);
+}
+.final-sub{
+  font-size:14px;
+  color: var(--plum-soft);
+  line-height:1.7;
+  max-width:330px;
+}
+
+/* controls */
+.controls{
+  margin-top: 30px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.next-btn{
+  font-family:'Quicksand', sans-serif;
+  font-weight:700;
+  font-size:15px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--rose) 0%, var(--wine) 100%);
+  border:none;
+  border-radius: 999px;
+  padding: 14px 34px;
+  cursor:pointer;
+  box-shadow: 0 10px 24px -8px rgba(140,47,73,0.55);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  letter-spacing:0.02em;
+}
+.next-btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -8px rgba(140,47,73,0.6);
+}
+.next-btn:active{
+  transform: translateY(0px) scale(0.98);
+}
+.next-btn:focus-visible{
+  outline: 3px solid var(--gold);
+  outline-offset:3px;
+}
+
+.counter-label{
+  font-size:13px;
+  color: var(--plum-soft);
+  font-weight:600;
+  letter-spacing:0.04em;
+}
+
+.restart-link{
+  margin-top:20px;
+  font-size:12px;
+  color: var(--plum-soft);
+  text-decoration:underline;
+  cursor:pointer;
+  background:none;
+  border:none;
+  font-family:'Quicksand', sans-serif;
+  opacity:0.75;
+}
+.restart-link:hover{ opacity:1; }
+
+@media (max-width:420px){
+  .stage{ height: 400px; }
+  .card{ padding: 34px 26px; }
+}
+</style>
+</head>
+<body>
+
+<div class="float-deco d1">🌹</div>
+<div class="float-deco d2">💋</div>
+<div class="float-deco d3">💗</div>
+<div class="float-deco d4">🌹</div>
+<div class="float-deco d5">✨</div>
+<div class="float-deco d6">💗</div>
+<div class="float-deco d7">💋</div>
+<div class="float-deco d8">🌹</div>
+
+<div class="wrap">
+  <div class="eyebrow"><span class="heart">♥</span> Day One · The Week of Prithinga's Birthday <span class="heart">♥</span></div>
+  <h1 class="title-main">Some birthdays deserve more than a cake.<br>This one deserves 19 memories.</h1>
+  <p class="subtitle" id="subtitle">Tap through, one rose at a time 🌹</p>
+
+  <div class="candles" id="candles"></div>
+
+  <div class="stage">
+    <div class="card" id="card"></div>
+  </div>
+
+  <div class="controls" id="controls">
+    <span class="counter-label" id="counter">1 / 19</span>
+    <button class="next-btn" id="nextBtn">Next reason →</button>
+  </div>
+  <button class="restart-link" id="restartBtn" style="display:none;">start over from reason 1</button>
+</div>
+
+<script>
+const reasons = [
+  "your heart always chooses to give before it chooses to receive.",
+  "you stay when life gets heavy, not just when it's easy.",
+  "you never let the people you love carry their pain alone.",
+  "you listen with your heart, not just your ears.",
+  "your smile has a way of making ordinary days feel lighter.",
+  "you're bold enough to stand for what you believe in.",
+  "your enthusiasm is contagious — you make excitement feel effortless.",
+  "your dreams are big, and you work fearlessly toward them.",
+  "you're both soft-hearted and strong, and that's a rare combination.",
+  "you're the kind of friend who becomes family.",
+  "your kindness asks for nothing in return.",
+  "you remind me that love is shown through actions, not just words.",
+  "you're a true girl's girl — you celebrate, support, and lift up other women.",
+  "the way you treat my brother(En CHELLO) makes me love you more.",
+  "you are the moon to my sun.",
+  "you've stood beside me through moments when I needed someone the most.",
+  "your presence feels like home, no matter where we are.",
+  "you inspire me to become a kinder, braver, and better version of myself.",
+  "if I had to choose my people all over again, I'd still choose you — every single time."
+];
+
+let index = 0;
+let finished = false;
+let typing = false;
+let typeTimer = null;
+
+const cardEl = document.getElementById('card');
+const counterEl = document.getElementById('counter');
+const nextBtn = document.getElementById('nextBtn');
+const candlesEl = document.getElementById('candles');
+const subtitleEl = document.getElementById('subtitle');
+const restartBtn = document.getElementById('restartBtn');
+
+function buildCandles(){
+  candlesEl.innerHTML = '';
+  for(let i=0;i<reasons.length;i++){
+    const c = document.createElement('div');
+    c.className = 'candle';
+    c.id = 'candle-' + i;
+    candlesEl.appendChild(c);
+  }
+}
+
+function lightCandles(){
+  for(let i=0;i<reasons.length;i++){
+    const c = document.getElementById('candle-'+i);
+    if(i <= index){ c.classList.add('lit'); } else { c.classList.remove('lit'); }
+  }
+}
+
+function typeReason(text, targetEl){
+  clearInterval(typeTimer);
+  typing = true;
+  targetEl.innerHTML = '<span class="typed"></span><span class="cursor">&nbsp;</span>';
+  const typedEl = targetEl.querySelector('.typed');
+  let i = 0;
+  typeTimer = setInterval(() => {
+    if(i < text.length){
+      typedEl.textContent += text[i];
+      i++;
+    } else {
+      clearInterval(typeTimer);
+      typing = false;
+      const cursor = targetEl.querySelector('.cursor');
+      if(cursor) cursor.remove();
+    }
+  }, 26);
+}
+
+function renderCard(animate){
+  const num = String(index+1).padStart(2,'0');
+  cardEl.innerHTML =
+    '<div class="card-number">🌹 Reason № ' + num + ' of 19 🌹</div>' +
+    '<div class="card-reason"><span class="because">I love you because</span><span class="reason-text"></span></div>';
+  if(animate){
+    cardEl.classList.remove('entering');
+    void cardEl.offsetWidth;
+    cardEl.classList.add('entering');
+  }
+  counterEl.textContent = (index+1) + ' / 19';
+  lightCandles();
+  const reasonTextEl = cardEl.querySelector('.reason-text');
+  typeReason(reasons[index], reasonTextEl);
+}
+
+function renderFinal(){
+  cardEl.innerHTML =
+    '<div class="final-icon">💌🌹</div>' +
+    '<div class="final-heading">This is only Day 1...</div>' +
+    '<div class="final-sub">More surprises are loading.<br>See you tomorrow, Prithinga. ❤️💋</div>';
+  cardEl.classList.remove('entering');
+  void cardEl.offsetWidth;
+  cardEl.classList.add('entering');
+  subtitleEl.textContent = 'All 19 roses have bloomed 🌹✨';
+  nextBtn.style.display = 'none';
+  counterEl.textContent = '19 / 19 · complete';
+  restartBtn.style.display = 'inline-block';
+}
+
+nextBtn.addEventListener('click', () => {
+  if(finished) return;
+  if(typing){
+    clearInterval(typeTimer);
+    const reasonTextEl = cardEl.querySelector('.reason-text');
+    if(reasonTextEl){ reasonTextEl.textContent = reasons[index]; }
+    const cursor = cardEl.querySelector('.cursor');
+    if(cursor) cursor.remove();
+    typing = false;
+    return;
+  }
+  if(index < reasons.length - 1){
+    index++;
+    renderCard(true);
+  } else {
+    finished = true;
+    renderFinal();
+  }
+});
+
+restartBtn.addEventListener('click', () => {
+  index = 0;
+  finished = false;
+  nextBtn.style.display = 'inline-block';
+  restartBtn.style.display = 'none';
+  subtitleEl.textContent = 'Tap through, one rose at a time 🌹';
+  renderCard(true);
+});
+
+buildCandles();
+renderCard(false);
+</script>
+
+</body>
+</html>
