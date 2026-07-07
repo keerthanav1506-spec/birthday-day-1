@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Time Capsule #19 — Prithinga's Birthday</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Quicksand:wght@400;500;600;700&display=swap');
+
+:root{
+  --paper: #F1E7D2;
+  --paper-deep: #E3D2AC;
+  --paper-dark: #D8C393;
+  --ink: #2B2320;
+  --ink-soft: #6B5D4E;
+  --navy: #1F3A4D;
+  --navy-deep: #142A38;
+  --brass: #C9973E;
+  --brass-deep: #A87A2A;
+  --stamp-red: #A63A32;
+  --teal: #3F6E67;
+}
+
+*{ box-sizing:border-box; }
+
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse at 12% 8%, rgba(201,151,62,0.16) 0%, transparent 45%),
+    radial-gradient(ellipse at 90% 15%, rgba(31,58,77,0.10) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 92%, rgba(63,110,103,0.14) 0%, transparent 50%),
+    var(--paper);
+  font-family:'Quicksand', sans-serif;
+  color: var(--ink);
+  overflow-x:hidden;
+  background-image:
+    radial-gradient(ellipse at 12% 8%, rgba(201,151,62,0.16) 0%, transparent 45%),
+    radial-gradient(ellipse at 90% 15%, rgba(31,58,77,0.10) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 92%, rgba(63,110,103,0.14) 0%, transparent 50%),
+    repeating-linear-gradient(0deg, rgba(43,35,32,0.015) 0px, rgba(43,35,32,0.015) 1px, transparent 1px, transparent 3px);
+}
+
+.float-deco{
+  position:fixed;
+  pointer-events:none;
+  opacity:0.35;
+  animation: drift 16s ease-in-out infinite;
+  z-index:1;
+  color: var(--navy);
+}
+.d1{ top:8%; left:6%; font-size:26px; animation-delay:0s; }
+.d2{ top:78%; left:10%; font-size:20px; animation-delay:2s; }
+.d3{ top:14%; right:8%; font-size:24px; animation-delay:4s; }
+.d4{ bottom:8%; right:12%; font-size:28px; animation-delay:1s; }
+.d5{ top:46%; left:3%; font-size:18px; animation-delay:3s; }
+.d6{ top:38%; right:4%; font-size:20px; animation-delay:5s; }
+
+@keyframes drift{
+  0%,100%{ transform: translateY(0) rotate(-3deg); }
+  50%{ transform: translateY(-14px) rotate(4deg); }
+}
+@media (prefers-reduced-motion: reduce){ .float-deco{ animation:none; } }
+
+.wrap{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding: 40px 20px;
+  position:relative;
+  z-index:2;
+}
+
+.screen{ display:flex; flex-direction:column; align-items:center; width:100%; max-width:520px; }
+.hidden{ display:none !important; }
+
+/* eyebrow / label style — postmark feel */
+.eyebrow{
+  font-family:'Special Elite', monospace;
+  font-size:12px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color: var(--teal);
+  margin-bottom:14px;
+  text-align:center;
+}
+
+/* ============ INTRO / SEALED CAPSULE ============ */
+.capsule-box{
+  width: min(88vw, 340px);
+  background: linear-gradient(180deg, #EFE2C4 0%, var(--paper-deep) 100%);
+  border: 2px solid rgba(43,35,32,0.18);
+  border-radius: 10px;
+  padding: 30px 26px;
+  text-align:center;
+  box-shadow: 0 24px 50px -20px rgba(31,58,77,0.35), inset 0 0 0 6px rgba(255,255,255,0.25);
+  position:relative;
+}
+.capsule-box::before{
+  content:'';
+  position:absolute;
+  inset:8px;
+  border: 1px dashed rgba(43,35,32,0.25);
+  border-radius:6px;
+  pointer-events:none;
+}
+.capsule-icon{
+  font-size:64px;
+  margin-bottom:10px;
+  display:inline-block;
+  animation: box-shake 3.2s ease-in-out infinite;
+}
+@keyframes box-shake{
+  0%,88%,100%{ transform: rotate(0deg); }
+  90%{ transform: rotate(-4deg); }
+  92%{ transform: rotate(4deg); }
+  94%{ transform: rotate(-3deg); }
+  96%{ transform: rotate(2deg); }
+}
+.capsule-title{
+  font-family:'Special Elite', monospace;
+  font-size: clamp(18px, 4vw, 22px);
+  color: var(--navy);
+  letter-spacing:0.06em;
+  margin-bottom: 16px;
+}
+.capsule-field{
+  text-align:left;
+  font-family:'Quicksand', sans-serif;
+  font-size:13.5px;
+  color: var(--ink-soft);
+  line-height:1.9;
+  border-top: 1px dashed rgba(43,35,32,0.3);
+  padding-top: 14px;
+  margin-top: 6px;
+}
+.capsule-field b{ color: var(--ink); font-weight:700; }
+.status-line{ color: var(--stamp-red); font-weight:700; }
+
+.stamp{
+  position:absolute;
+  top:-14px;
+  right:-14px;
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  border: 2.5px dashed var(--stamp-red);
+  color: var(--stamp-red);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Special Elite', monospace;
+  font-size:9px;
+  text-align:center;
+  letter-spacing:0.05em;
+  transform: rotate(14deg);
+  background: rgba(241,231,210,0.9);
+  line-height:1.2;
+}
+
+.intro-note{
+  max-width: 380px;
+  text-align:center;
+  font-size:14px;
+  color: var(--ink-soft);
+  line-height:1.7;
+  margin: 22px 0 26px 0;
+}
+
+.big-btn{
+  font-family:'Quicksand', sans-serif;
+  font-weight:700;
+  font-size:16px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+  border:none;
+  border-radius: 999px;
+  padding: 15px 36px;
+  cursor:pointer;
+  box-shadow: 0 12px 26px -10px rgba(31,58,77,0.55);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  letter-spacing:0.02em;
+}
+.big-btn:hover{ transform: translateY(-2px); }
+.big-btn:active{ transform: translateY(0) scale(0.97); }
+
+/* ============ SHARED "PAPER CARD" ============ */
+.paper-card{
+  width:100%;
+  background: linear-gradient(180deg, #FBF6EA 0%, #F5EAD2 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(43,35,32,0.14);
+  padding: 36px 32px;
+  text-align:center;
+  box-shadow: 0 20px 45px -20px rgba(31,58,77,0.28);
+  position:relative;
+  animation: cardIn 0.5s cubic-bezier(.2,.8,.3,1.1);
+}
+.paper-card::before{
+  content:'';
+  position:absolute;
+  inset:9px;
+  border: 1px dashed rgba(43,35,32,0.16);
+  border-radius:10px;
+  pointer-events:none;
+}
+@keyframes cardIn{
+  from{ transform: translateY(14px) scale(0.97); opacity:0; }
+  to{ transform:none; opacity:1; }
+}
+
+.card-label{
+  font-family:'Special Elite', monospace;
+  font-size:13px;
+  color: var(--brass-deep);
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  margin-bottom:18px;
+}
+
+.letter-body{
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-size: clamp(16.5px, 3.4vw, 19px);
+  line-height:1.85;
+  color: var(--ink);
+  text-align:left;
+  white-space:pre-line;
+}
+.letter-sign{
+  margin-top:18px;
+  font-weight:600;
+  text-align:right;
+  color: var(--teal);
+}
+
+.prediction-text{
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-size: clamp(18px, 3.8vw, 22px);
+  line-height:1.7;
+  color: var(--ink);
+  white-space:pre-line;
+}
+
+.cursor{
+  display:inline-block;
+  width:2px;
+  background: var(--navy);
+  margin-left:2px;
+  animation: blink 0.8s steps(1) infinite;
+}
+@keyframes blink{ 50%{ opacity:0; } }
+
+.next-btn{
+  margin-top: 26px;
+  font-family:'Quicksand', sans-serif;
+  font-weight:700;
+  font-size:14.5px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--teal) 0%, #2E534D 100%);
+  border:none;
+  border-radius: 999px;
+  padding: 12px 28px;
+  cursor:pointer;
+  box-shadow: 0 10px 22px -10px rgba(63,110,103,0.55);
+  transition: transform 0.2s ease;
+}
+.next-btn:hover{ transform: translateY(-2px); }
+
+.step-counter{
+  font-family:'Special Elite', monospace;
+  font-size:12px;
+  color: var(--ink-soft);
+  margin-top:14px;
+}
+
+/* ============ HIDDEN OBJECTS ============ */
+.objects-title{
+  font-family:'Special Elite', monospace;
+  font-size:17px;
+  color: var(--navy);
+  margin-bottom:6px;
+  text-align:center;
+}
+.objects-sub{
+  font-size:13px;
+  color: var(--ink-soft);
+  text-align:center;
+  margin-bottom:22px;
+}
+.objects-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:14px;
+  width:100%;
+  max-width:420px;
+  margin-bottom: 10px;
+}
+.object-tile{
+  aspect-ratio: 1;
+  background: linear-gradient(180deg, #FBF6EA 0%, #F0E1BF 100%);
+  border: 1px solid rgba(43,35,32,0.16);
+  border-radius: 14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  cursor:pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 10px 20px -12px rgba(31,58,77,0.3);
+  position:relative;
+}
+.object-tile:hover{ transform: translateY(-3px); }
+.object-tile.opened{
+  background: linear-gradient(180deg, #E7EEE9 0%, #D9E6DE 100%);
+  border-color: rgba(63,110,103,0.35);
+}
+.object-icon{ font-size:34px; }
+.object-name{
+  font-family:'Quicksand', sans-serif;
+  font-size:11px;
+  font-weight:700;
+  color: var(--ink-soft);
+  text-align:center;
+  padding: 0 4px;
+}
+.object-check{
+  position:absolute;
+  top:6px; right:8px;
+  font-size:13px;
+  color: var(--teal);
+}
+
+.object-modal-backdrop{
+  position:fixed;
+  inset:0;
+  background: rgba(31,58,77,0.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:50;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn{ from{ opacity:0;} to{ opacity:1;} }
+.object-modal{
+  background: #FBF6EA;
+  border-radius:18px;
+  padding: 30px 28px;
+  max-width: 360px;
+  width:100%;
+  text-align:center;
+  box-shadow: 0 30px 60px -20px rgba(31,58,77,0.45);
+  border: 1px solid rgba(43,35,32,0.15);
+  animation: cardIn 0.3s ease;
+}
+.object-modal-icon{ font-size:38px; margin-bottom:10px; }
+.object-modal-title{
+  font-family:'Special Elite', monospace;
+  font-size:14px;
+  color: var(--stamp-red);
+  margin-bottom:12px;
+  letter-spacing:0.04em;
+}
+.object-modal-body{
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-size:16px;
+  line-height:1.6;
+  color: var(--ink);
+  white-space:pre-line;
+  margin-bottom:20px;
+}
+.object-modal-close{
+  font-family:'Quicksand', sans-serif;
+  font-weight:700;
+  font-size:13px;
+  color:#fff;
+  background: var(--navy);
+  border:none;
+  border-radius:999px;
+  padding:10px 26px;
+  cursor:pointer;
+}
+
+.objects-progress{
+  font-family:'Special Elite', monospace;
+  font-size:12px;
+  color: var(--ink-soft);
+  margin: 18px 0 6px 0;
+}
+.continue-wrap{ min-height:52px; display:flex; align-items:center; justify-content:center; }
+
+/* ============ FINAL ============ */
+.final-icon{ font-size:38px; margin-bottom:14px; }
+.final-body{
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-size: clamp(17px, 3.6vw, 20px);
+  line-height:1.8;
+  color: var(--ink);
+  white-space:pre-line;
+}
+.final-tomorrow{
+  margin-top:24px;
+  font-family:'Special Elite', monospace;
+  font-size:13px;
+  color: var(--teal);
+}
+.nav-links{
+  margin-top: 22px;
+  display:flex;
+  gap:18px;
+}
+.nav-link{
+  font-size:12px;
+  color: var(--ink-soft);
+  text-decoration:underline;
+  opacity:0.75;
+}
+.nav-link:hover{ opacity:1; }
+
+@media (max-width:420px){
+  .paper-card{ padding:28px 22px; }
+  .object-icon{ font-size:28px; }
+}
+</style>
+</head>
+<body>
+
+<div class="float-deco d1">📮</div>
+<div class="float-deco d2">⏳</div>
+<div class="float-deco d3">✉️</div>
+<div class="float-deco d4">🕰️</div>
+<div class="float-deco d5">📬</div>
+<div class="float-deco d6">⏳</div>
+
+<div class="wrap">
+
+  <!-- SCREEN 1 — SEALED CAPSULE -->
+  <div class="screen" id="introScreen">
+    <div class="eyebrow">Day Three · A Package From The Future</div>
+    <div class="capsule-box">
+      <div class="stamp">PAST<br>DUE<br>1 DAY</div>
+      <div class="capsule-icon">📦</div>
+      <div class="capsule-title">TIME CAPSULE #19</div>
+      <div class="capsule-field">
+        📬 You've received a Time Capsule from the future.<br>
+        <b>Date Sent:</b> 19 July, 2035<br>
+        <b>Recipient:</b> Prithinga (Age 19)<br>
+        <span class="status-line">Status: Slightly damaged during time travel. Please open carefully.</span>
+      </div>
+    </div>
+    <p class="intro-note">Someone in 2035 accidentally mailed this back through time. It's addressed to you.</p>
+    <button class="big-btn" id="openBtn">Open the Capsule 📦</button>
+  </div>
+
+  <!-- SCREEN 2 — LETTER -->
+  <div class="screen hidden" id="letterScreen">
+    <div class="eyebrow">Contents 1 of 3</div>
+    <div class="paper-card">
+      <div class="card-label">✉️ Message from Future You</div>
+      <div class="letter-body" id="letterBody"></div>
+    </div>
+    <div class="continue-wrap">
+      <button class="next-btn hidden" id="letterNextBtn">Continue →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 3 — PREDICTIONS -->
+  <div class="screen hidden" id="predictionScreen">
+    <div class="eyebrow">Contents 2 of 3</div>
+    <div class="paper-card">
+      <div class="card-label" id="predictionLabel"></div>
+      <div class="prediction-text" id="predictionText"></div>
+    </div>
+    <div class="step-counter" id="predictionCounter"></div>
+    <div class="continue-wrap">
+      <button class="next-btn hidden" id="predictionNextBtn">Continue →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 4 — HIDDEN OBJECTS -->
+  <div class="screen hidden" id="objectsScreen">
+    <div class="eyebrow">Contents 3 of 3</div>
+    <div class="objects-title">🎁 Hidden Objects</div>
+    <div class="objects-sub">Something fell loose during transit. Tap everything you find.</div>
+    <div class="objects-grid" id="objectsGrid"></div>
+    <div class="objects-progress" id="objectsProgress">0 / 6 found</div>
+    <div class="continue-wrap">
+      <button class="next-btn hidden" id="objectsNextBtn">Read the last note →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 5 — FINAL -->
+  <div class="screen hidden" id="finalScreen">
+    <div class="eyebrow">Capsule Complete</div>
+    <div class="paper-card">
+      <div class="final-icon">🌙</div>
+      <div class="card-label">One Last Note...</div>
+      <div class="final-body" id="finalBody"></div>
+      <div class="final-tomorrow">📦 Another Time Capsule arrives tomorrow.</div>
+    </div>
+    <div class="nav-links">
+      <a class="nav-link" href="balloon-pop.html">← Back to Day 2</a>
+    </div>
+  </div>
+
+  <!-- OBJECT MODAL -->
+  <div class="object-modal-backdrop hidden" id="objectModalBackdrop">
+    <div class="object-modal">
+      <div class="object-modal-icon" id="modalIcon"></div>
+      <div class="object-modal-title" id="modalTitle"></div>
+      <div class="object-modal-body" id="modalBody"></div>
+      <button class="object-modal-close" id="modalClose">Close</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ---------- content ---------- */
+const letterText = `Hey, Nineteen-Year-Old Me.
+
+I know you're excited. A little scared. And pretending you have everything figured out.
+
+Spoiler...
+You don't.
+
+And that's the beautiful part.
+
+Keep laughing too loudly. Keep helping people before they ask. Keep believing in impossible things.
+
+One random handshake... will become one of your favorite stories.
+
+Some people will leave. Some people will stay.
+Hold tightly to the ones who stay.`;
+
+const predictions = [
+  {
+    label: '🔮 Prediction #1',
+    text: `One day...\nSomeone will describe you as,\n\n"She walked into my life quietly... and somehow made it feel louder, warmer, and safer."\n\nYou'll smile...\nbecause you never realized you had that effect.`
+  },
+  {
+    label: '🍃 Prediction #2',
+    text: `You'll still stop to help strangers.\nEven when you're busy.\n\nBecause kindness isn't something you do.\nIt's just who you are.`
+  },
+  {
+    label: '🌧️ Prediction #3',
+    text: `You'll still instinctively hold someone's hand while crossing a puddle...\n\nwithout realizing that tiny gestures become unforgettable memories.`
+  }
+];
+
+const objects = [
+  { icon:'👜', name:'The Bag', title:'Achievement Unlocked', body:`Professional Bag Carrier\nLevel: Infinite\n\nStill refusing to let me carry my own bag.` },
+  { icon:'🍿', name:'The Popcorn', title:'Future Report', body:`You still can't watch a series without saying,\n"Just one more episode."\n\nYou both know that's a lie.` },
+  { icon:'🧠', name:'The Brain', title:'Congratulations!', body:`You still solve everyone's problems...\nexcept deciding what to eat.` },
+  { icon:'👦', name:'Tiny Brother', title:'🚨 Security Alert 🚨', body:`Reminder from the Past:\nDON'T STEAL MY BROTHER.\n\nThis warning has remained active for 9 years.` },
+  { icon:'🤝', name:'The Handshake', title:'System Log', body:`One handshake.\nTwo random people.\nThousands of conversations later...\n\nStill one of the best decisions ever.` },
+  { icon:'🌸', name:'The Flower', title:'Future Observation', body:`You never noticed...\nbut people always feel calmer after talking to you.` }
+];
+
+const finalText = `Dear 19-year-old Prithinga,
+
+Not every beautiful story begins with fireworks.
+
+Sometimes...
+it begins with a simple "Hi."
+And a handshake.
+
+Happy Birthday.
+Keep being wonderfully, unapologetically you.
+
+See you tomorrow...`;
+
+/* ---------- typewriter helper ---------- */
+let typeTimer = null;
+function typeInto(el, text, speed, onDone){
+  clearInterval(typeTimer);
+  el.innerHTML = '<span class="typed"></span><span class="cursor">&nbsp;</span>';
+  const typedEl = el.querySelector('.typed');
+  let i = 0;
+  typeTimer = setInterval(() => {
+    if(i < text.length){
+      typedEl.textContent += text[i];
+      i++;
+    } else {
+      clearInterval(typeTimer);
+      const c = el.querySelector('.cursor');
+      if(c) c.remove();
+      if(onDone) onDone();
+    }
+  }, speed);
+  return {
+    skip: () => {
+      clearInterval(typeTimer);
+      el.textContent = text;
+      if(onDone) onDone();
+    }
+  };
+}
+
+/* ---------- screens ---------- */
+const screens = {
+  intro: document.getElementById('introScreen'),
+  letter: document.getElementById('letterScreen'),
+  prediction: document.getElementById('predictionScreen'),
+  objects: document.getElementById('objectsScreen'),
+  final: document.getElementById('finalScreen')
+};
+function showScreen(name){
+  Object.values(screens).forEach(s => s.classList.add('hidden'));
+  screens[name].classList.remove('hidden');
+}
+
+/* ---------- letter screen ---------- */
+document.getElementById('openBtn').addEventListener('click', () => {
+  showScreen('letter');
+  const el = document.getElementById('letterBody');
+  const btn = document.getElementById('letterNextBtn');
+  btn.classList.add('hidden');
+  const ctrl = typeInto(el, letterText, 18, () => btn.classList.remove('hidden'));
+  el.addEventListener('click', () => ctrl.skip(), { once:true });
+});
+document.getElementById('letterNextBtn').addEventListener('click', () => {
+  showScreen('prediction');
+  renderPrediction();
+});
+
+/* ---------- prediction screen ---------- */
+let predIndex = 0;
+function renderPrediction(){
+  const p = predictions[predIndex];
+  document.getElementById('predictionLabel').textContent = p.label;
+  document.getElementById('predictionCounter').textContent = (predIndex+1) + ' / ' + predictions.length;
+  const el = document.getElementById('predictionText');
+  const btn = document.getElementById('predictionNextBtn');
+  btn.classList.add('hidden');
+  btn.textContent = predIndex < predictions.length - 1 ? 'Continue →' : 'Open the last envelope →';
+  const ctrl = typeInto(el, p.text, 16, () => btn.classList.remove('hidden'));
+  el.onclick = () => ctrl.skip();
+}
+document.getElementById('predictionNextBtn').addEventListener('click', () => {
+  predIndex++;
+  if(predIndex < predictions.length){
+    renderPrediction();
+  } else {
+    showScreen('objects');
+    buildObjects();
+  }
+});
+
+/* ---------- hidden objects screen ---------- */
+let openedCount = 0;
+const openedSet = new Set();
+function buildObjects(){
+  const grid = document.getElementById('objectsGrid');
+  grid.innerHTML = '';
+  objects.forEach((obj, i) => {
+    const tile = document.createElement('div');
+    tile.className = 'object-tile';
+    tile.id = 'obj-' + i;
+    tile.innerHTML = `<div class="object-icon">${obj.icon}</div><div class="object-name">${obj.name}</div>`;
+    tile.addEventListener('click', () => openObject(i));
+    grid.appendChild(tile);
+  });
+  updateObjectsProgress();
+}
+function openObject(i){
+  const modalBackdrop = document.getElementById('objectModalBackdrop');
+  const obj = objects[i];
+  document.getElementById('modalIcon').textContent = obj.icon;
+  document.getElementById('modalTitle').textContent = obj.title;
+  document.getElementById('modalBody').textContent = obj.body;
+  modalBackdrop.classList.remove('hidden');
+
+  if(!openedSet.has(i)){
+    openedSet.add(i);
+    openedCount++;
+    const tile = document.getElementById('obj-' + i);
+    tile.classList.add('opened');
+    if(!tile.querySelector('.object-check')){
+      const check = document.createElement('div');
+      check.className = 'object-check';
+      check.textContent = '✓';
+      tile.appendChild(check);
+    }
+    updateObjectsProgress();
+  }
+}
+function updateObjectsProgress(){
+  document.getElementById('objectsProgress').textContent = openedCount + ' / ' + objects.length + ' found';
+  const nextBtn = document.getElementById('objectsNextBtn');
+  if(openedCount === objects.length){
+    nextBtn.classList.remove('hidden');
+  }
+}
+document.getElementById('modalClose').addEventListener('click', () => {
+  document.getElementById('objectModalBackdrop').classList.add('hidden');
+});
+document.getElementById('objectModalBackdrop').addEventListener('click', (e) => {
+  if(e.target.id === 'objectModalBackdrop'){
+    document.getElementById('objectModalBackdrop').classList.add('hidden');
+  }
+});
+document.getElementById('objectsNextBtn').addEventListener('click', () => {
+  showScreen('final');
+  const el = document.getElementById('finalBody');
+  typeInto(el, finalText, 18);
+});
+</script>
+
+</body>
+</html>
