@@ -238,6 +238,30 @@ html,body{
   color: var(--plum-soft);
   line-height:1.7;
   max-width:330px;
+  margin-bottom: 22px;
+}
+
+.next-day-btn{
+  font-family:'Quicksand', sans-serif;
+  font-weight:700;
+  font-size:14px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--rose-dark) 100%);
+  border:none;
+  border-radius: 999px;
+  padding: 13px 28px;
+  cursor:pointer;
+  box-shadow: 0 10px 22px -8px rgba(140,47,73,0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration:none;
+  display:inline-block;
+}
+.next-day-btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 14px 26px -8px rgba(140,47,73,0.55);
+}
+.next-day-btn:active{
+  transform: translateY(0) scale(0.98);
 }
 
 /* controls */
@@ -420,7 +444,8 @@ function renderFinal(){
   cardEl.innerHTML =
     '<div class="final-icon">💌🌹</div>' +
     '<div class="final-heading">This is only Day 1...</div>' +
-    '<div class="final-sub">More surprises are loading.<br>See you tomorrow, Prithinga. ❤️💋</div>';
+    '<div class="final-sub">More surprises are loading.<br>See you tomorrow, Prithinga. ❤️💋</div>' +
+    '<a class="next-day-btn" href="balloon-pop.html">Go to Day 2 🎈</a>';
   cardEl.classList.remove('entering');
   void cardEl.offsetWidth;
   cardEl.classList.add('entering');
