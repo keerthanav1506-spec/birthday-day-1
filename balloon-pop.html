@@ -320,6 +320,22 @@ html,body{
 }
 .restart-link:hover{ opacity:1; }
 
+.next-day-btn{
+  margin-top: 22px;
+  display:inline-block;
+  font-family:'Baloo 2', sans-serif;
+  font-weight:700;
+  font-size:15px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--grape) 0%, #7A4FB0 100%);
+  border-radius: 999px;
+  padding: 13px 30px;
+  text-decoration:none;
+  box-shadow: 0 10px 22px -8px rgba(122,79,176,0.55);
+  transition: transform 0.2s ease;
+}
+.next-day-btn:hover{ transform: translateY(-2px); }
+
 @media (max-width:420px){
   .balloon-emoji{ font-size:104px; }
   .reveal-card{ padding: 30px 22px; }
@@ -468,7 +484,7 @@ function renderReveal(){
       <span class="tag ${item.cat}">${item.label}</span>
       <div class="reveal-number">Balloon ${index+1} of ${data.length}</div>
       <div class="reveal-text">${item.text}</div>
-      ${isFinal ? '' : '<button class="next-btn" id="nextBtn">Next Balloon 🎈</button>'}
+      ${isFinal ? '<a class="next-day-btn" href="time-capsule-19.html">Go to Day 3 📦</a>' : '<button class="next-btn" id="nextBtn">Next Balloon 🎈</button>'}
     </div>
   `;
   if(!isFinal){
