@@ -416,6 +416,7 @@ html,body{
   margin-top: 22px;
   display:flex;
   gap:18px;
+  align-items:center;
 }
 .nav-link{
   font-size:12px;
@@ -424,6 +425,21 @@ html,body{
   opacity:0.75;
 }
 .nav-link:hover{ opacity:1; }
+
+.next-day-btn{
+  font-family:'Quicksand', sans-serif;
+  font-weight:700;
+  font-size:14px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--teal) 0%, var(--navy) 100%);
+  border-radius: 999px;
+  padding: 12px 26px;
+  text-decoration:none;
+  box-shadow: 0 10px 22px -10px rgba(31,58,77,0.5);
+  transition: transform 0.2s ease;
+  display:inline-block;
+}
+.next-day-btn:hover{ transform: translateY(-2px); }
 
 @media (max-width:420px){
   .paper-card{ padding:28px 22px; }
@@ -507,6 +523,7 @@ html,body{
       <div class="final-tomorrow">📦 Another Time Capsule arrives tomorrow.</div>
     </div>
     <div class="nav-links">
+      <a class="next-day-btn" href="constellation.html">Go to Day 4 ✨</a>
       <a class="nav-link" href="balloon-pop.html">← Back to Day 2</a>
     </div>
   </div>
