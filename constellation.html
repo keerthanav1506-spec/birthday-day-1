@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Constellation — Prithinga's Birthday</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Quicksand:wght@400;500;600;700&display=swap');
+
+:root{
+  --night-1: #0B1130;
+  --night-2: #161B3D;
+  --night-3: #232A57;
+  --gold: #F2C14E;
+  --gold-soft: #FFE4A3;
+  --gold-dim: #6B5E3A;
+  --star-dim: #3C4370;
+  --ink: #EDEBFB;
+  --ink-soft: #A8AAD1;
+  --wing: #F2C14E;
+}
+
+*{ box-sizing:border-box; }
+
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(242,193,78,0.06) 0%, transparent 45%),
+    radial-gradient(ellipse at 80% 85%, rgba(242,193,78,0.05) 0%, transparent 50%),
+    linear-gradient(180deg, var(--night-1) 0%, var(--night-2) 55%, var(--night-3) 100%);
+  font-family:'Quicksand', sans-serif;
+  color: var(--ink);
+  overflow-x:hidden;
+}
+
+/* faint background twinkles */
+.twinkle{
+  position:fixed;
+  border-radius:50%;
+  background: #fff;
+  opacity:0.35;
+  animation: twinkle 3.5s ease-in-out infinite;
+  pointer-events:none;
+  z-index:0;
+}
+@keyframes twinkle{
+  0%,100%{ opacity:0.15; }
+  50%{ opacity:0.6; }
+}
+
+.wrap{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding: 40px 20px;
+  position:relative;
+  z-index:2;
+}
+
+.screen{ display:flex; flex-direction:column; align-items:center; width:100%; max-width:520px; }
+.hidden{ display:none !important; }
+
+.eyebrow{
+  font-size:12.5px;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color: var(--gold);
+  font-weight:700;
+  margin-bottom:16px;
+  text-align:center;
+}
+
+/* ============ INTRO ============ */
+.intro-title{
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-weight:600;
+  font-size:clamp(24px, 5vw, 34px);
+  text-align:center;
+  color: var(--gold-soft);
+  margin: 0 0 18px 0;
+  text-shadow: 0 0 18px rgba(242,193,78,0.25);
+}
+.intro-text{
+  max-width: 420px;
+  text-align:center;
+  font-size:15px;
+  color: var(--ink-soft);
+  line-height:1.85;
+  margin-bottom: 30px;
+}
+.intro-text em{ color: var(--ink); font-style:italic; }
+
+.big-btn{
+  font-family:'Quicksand', sans-serif;
+  font-weight:700;
+  font-size:16px;
+  color: var(--night-1);
+  background: linear-gradient(135deg, var(--gold-soft) 0%, var(--gold) 100%);
+  border:none;
+  border-radius: 999px;
+  padding: 15px 36px;
+  cursor:pointer;
+  box-shadow: 0 12px 30px -8px rgba(242,193,78,0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  letter-spacing:0.02em;
+}
+.big-btn:hover{ transform: translateY(-2px); }
+.big-btn:active{ transform: translateY(0) scale(0.97); }
+
+/* ============ MAIN — STAR MAP ============ */
+.progress-label{
+  font-family:'Quicksand', sans-serif;
+  font-size:13px;
+  font-weight:700;
+  color: var(--ink-soft);
+  letter-spacing:0.06em;
+  margin-bottom: 14px;
+}
+
+.sky-wrap{
+  width: min(92vw, 420px);
+  position:relative;
+}
+.sky-svg{ width:100%; height:auto; overflow:visible; }
+
+.star-line{
+  stroke: var(--gold);
+  stroke-width: 1.3;
+  opacity: 0.7;
+  fill:none;
+  transition: stroke-dashoffset 0.9s ease;
+}
+
+.star-dot{ cursor:default; transition: r 0.3s ease; }
+.star-dot.future{ fill: var(--star-dim); }
+.star-dot.lit{ fill: var(--gold); filter: drop-shadow(0 0 6px rgba(242,193,78,0.9)); }
+.star-dot.current{
+  fill: var(--gold-soft);
+  cursor:pointer;
+  filter: drop-shadow(0 0 10px rgba(242,193,78,1));
+  animation: pulse-star 1.4s ease-in-out infinite;
+}
+@keyframes pulse-star{
+  0%,100%{ r:7; }
+  50%{ r:10; }
+}
+.star-num{
+  font-family:'Quicksand', sans-serif;
+  font-size:8px;
+  font-weight:700;
+  fill: var(--night-1);
+  text-anchor:middle;
+  dominant-baseline:central;
+  pointer-events:none;
+}
+
+.message-card{
+  margin-top: 30px;
+  width:100%;
+  background: rgba(237,235,251,0.05);
+  border: 1px solid rgba(242,193,78,0.25);
+  border-radius: 20px;
+  padding: 30px 28px;
+  text-align:center;
+  backdrop-filter: blur(2px);
+  animation: cardIn 0.4s ease;
+  min-height: 130px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+@keyframes cardIn{ from{ opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;} }
+
+.message-label{
+  font-family:'Quicksand', sans-serif;
+  font-size:12px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color: var(--gold);
+  font-weight:700;
+  margin-bottom:14px;
+}
+.message-text{
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-size: clamp(17px, 3.6vw, 20px);
+  line-height:1.7;
+  color: var(--ink);
+  white-space:pre-line;
+}
+.cursor{
+  display:inline-block;
+  width:2px;
+  background: var(--gold);
+  margin-left:2px;
+  animation: blink 0.8s steps(1) infinite;
+}
+@keyframes blink{ 50%{ opacity:0; } }
+
+.next-btn{
+  margin-top: 30px;
+  font-family:'Quicksand', sans-serif;
+  font-weight:700;
+  font-size:15px;
+  color: var(--night-1);
+  background: linear-gradient(135deg, var(--gold-soft) 0%, var(--gold) 100%);
+  border:none;
+  border-radius: 999px;
+  padding: 13px 30px;
+  cursor:pointer;
+  box-shadow: 0 10px 24px -8px rgba(242,193,78,0.5);
+  transition: transform 0.2s ease;
+}
+.next-btn:hover{ transform: translateY(-2px); }
+
+.hint{
+  margin-top: 22px;
+  font-size:13px;
+  color: var(--ink-soft);
+  text-align:center;
+  opacity:0.8;
+}
+
+/* ============ FINALE ============ */
+.finale-stage{
+  width: min(92vw, 340px);
+  height: 260px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom: 10px;
+}
+.butterfly-svg{
+  width: 100%;
+  height: 100%;
+  opacity:0;
+  animation: butterflyIn 1s ease forwards 0.2s;
+  filter: drop-shadow(0 0 18px rgba(242,193,78,0.55));
+}
+@keyframes butterflyIn{
+  from{ opacity:0; transform: scale(0.8); }
+  to{ opacity:1; transform: scale(1); }
+}
+.wing{ transform-origin: 100px 110px; animation: flutter 2.6s ease-in-out infinite; }
+.wing.right{ transform-origin: 100px 110px; animation: flutterR 2.6s ease-in-out infinite; }
+@keyframes flutter{
+  0%,100%{ transform: rotate(0deg) scaleX(1); }
+  50%{ transform: rotate(-6deg) scaleX(0.92); }
+}
+@keyframes flutterR{
+  0%,100%{ transform: rotate(0deg) scaleX(1); }
+  50%{ transform: rotate(6deg) scaleX(0.92); }
+}
+
+.finale-caption{
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-size: clamp(17px, 3.6vw, 20px);
+  line-height:1.85;
+  color: var(--ink);
+  text-align:center;
+  white-space:pre-line;
+  margin-top: 8px;
+}
+
+.finale-heading{
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-weight:600;
+  font-size: clamp(20px, 4vw, 26px);
+  color: var(--gold-soft);
+  text-align:center;
+  margin: 22px 0 8px 0;
+}
+
+.finale-tomorrow{
+  margin-top:22px;
+  font-family:'Quicksand', sans-serif;
+  font-size:13px;
+  color: var(--ink-soft);
+  text-align:center;
+}
+
+.nav-links{
+  margin-top: 26px;
+  display:flex;
+  gap:20px;
+}
+.nav-link{
+  font-size:12px;
+  color: var(--ink-soft);
+  text-decoration:underline;
+  opacity:0.75;
+}
+.nav-link:hover{ opacity:1; }
+
+@media (max-width:420px){
+  .message-card{ padding:24px 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap" id="wrap">
+
+  <!-- SCREEN 1 — INTRO -->
+  <div class="screen" id="introScreen">
+    <div class="eyebrow">Day Four · The Constellation</div>
+    <div class="intro-title">✨ The sky has been waiting for you. ✨</div>
+    <div class="intro-text">
+      Nineteen stars are scattered across the night.<br><br>
+      On their own... <em>they're just tiny lights.</em><br><br>
+      But some things only make sense when you connect them.
+    </div>
+    <button class="big-btn" id="startBtn">Draw the Constellation ✨</button>
+  </div>
+
+  <!-- SCREEN 2 — STAR MAP -->
+  <div class="screen hidden" id="mapScreen">
+    <div class="eyebrow">Connect the Stars</div>
+    <div class="progress-label" id="progressLabel">Star 1 of 19</div>
+
+    <div class="sky-wrap">
+      <svg class="sky-svg" id="skySvg" viewBox="0 0 400 300"></svg>
+    </div>
+
+    <div class="message-card" id="messageCard">
+      <div class="hint" id="hintText">Tap the glowing star to reveal its message.</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 3 — FINALE -->
+  <div class="screen hidden" id="finaleScreen">
+    <div class="eyebrow">Constellation Complete</div>
+    <div class="finale-stage">
+      <svg class="butterfly-svg" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+        <g class="wing left">
+          <path d="M100,110 C60,60 10,55 5,95 C0,130 45,150 100,120 Z" fill="var(--wing)" opacity="0.95"/>
+          <path d="M100,120 C65,120 30,150 40,175 C50,198 85,185 100,140 Z" fill="var(--wing)" opacity="0.75"/>
+        </g>
+        <g class="wing right">
+          <path d="M100,110 C140,60 190,55 195,95 C200,130 155,150 100,120 Z" fill="var(--wing)" opacity="0.95"/>
+          <path d="M100,120 C135,120 170,150 160,175 C150,198 115,185 100,140 Z" fill="var(--wing)" opacity="0.75"/>
+        </g>
+        <ellipse cx="100" cy="115" rx="5" ry="35" fill="#4A3B12"/>
+        <circle cx="100" cy="80" r="5" fill="#4A3B12"/>
+        <line x1="100" y1="80" x2="90" y2="65" stroke="#4A3B12" stroke-width="2"/>
+        <line x1="100" y1="80" x2="110" y2="65" stroke="#4A3B12" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <div class="finale-caption" id="finaleCaption"></div>
+  </div>
+
+</div>
+
+<script>
+/* ---------- background twinkles ---------- */
+(function(){
+  const wrap = document.getElementById('wrap');
+  for(let i=0;i<26;i++){
+    const t = document.createElement('div');
+    t.className = 'twinkle';
+    const size = Math.random()*2 + 1;
+    t.style.width = size + 'px';
+    t.style.height = size + 'px';
+    t.style.left = (Math.random()*100) + 'vw';
+    t.style.top = (Math.random()*100) + 'vh';
+    t.style.animationDelay = (Math.random()*3.5) + 's';
+    wrap.appendChild(t);
+  }
+})();
+
+/* ---------- content ---------- */
+const stars = [
+  `Thank you for saying "Hi."\nYou had no idea that one handshake would become one of my favorite memories.`,
+  `Thank you for making "I'm here" feel like a promise instead of just words.`,
+  `Thank you for never making me feel like I was "too much."`,
+  `Thank you for staying beside me when my world felt louder than my thoughts.`,
+  `Thank you for making room for me in your everyday life.`,
+  `Thank you for laughing at the most random things with me.\nLife became lighter because of it.`,
+  `Thank you for protecting my white dress more carefully than I did.\nI noticed.`,
+  `Thank you for offering me your hand before I even thought to ask.\nSome people remember words.\nI remember gestures.`,
+  `Thank you for carrying my bag...\nand somehow never carrying it like it was a burden.`,
+  `Thank you for helping my brother.\n(Still... don't steal him. He's mine. 😤)`,
+  `Thank you for every internship day that somehow became a memory instead of just another day.`,
+  `Thank you for every episode that started with,\n"Just one..."\nand somehow ended three episodes later.`,
+  `Thank you for matching my chaos instead of running away from it.\nThat's a rare talent.`,
+  `Thank you for reminding me that kindness can be quiet.\nIt doesn't always have to announce itself.`,
+  `Thank you for being someone I don't have to become a different person around.`,
+  `Thank you for proving that friendships don't need years to become meaningful.\nSometimes...\nthey just need the right people.`,
+  `Thank you for every little thing you probably forgot...\nbecause I didn't.`,
+  `Thank you for being one of the safest chapters of my year.`,
+  `Thank you...\nfor becoming one of my favorite coincidences.`
+];
+
+const finaleText = `✨ The stars begin to glow.
+
+One by one...
+they stop looking like separate lights.
+
+Lines appear between them.
+
+Slowly...
+a butterfly spreads its wings across the night sky. 🦋
+
+Maybe that's what friendship is.
+
+Tiny moments.
+Tiny kindnesses.
+Tiny laughs.
+Tiny conversations.
+
+None of them seem extraordinary on their own.
+But when you connect them...
+they become something beautiful.`;
+
+/* ---------- star positions (viewBox 400 x 300) ---------- */
+const positions = [
+  [40,60],[90,38],[140,68],[190,42],[240,72],
+  [292,48],[335,92],[302,140],[250,120],[200,150],
+  [150,128],[100,158],[58,138],[30,190],[72,222],
+  [122,208],[172,238],[222,216],[270,258]
+];
+
+/* ---------- build svg ---------- */
+const svg = document.getElementById('skySvg');
+const NS = 'http://www.w3.org/2000/svg';
+
+const linesGroup = document.createElementNS(NS,'g');
+svg.appendChild(linesGroup);
+const lines = [];
+for(let i=0;i<positions.length-1;i++){
+  const [x1,y1] = positions[i];
+  const [x2,y2] = positions[i+1];
+  const line = document.createElementNS(NS,'line');
+  line.setAttribute('x1',x1); line.setAttribute('y1',y1);
+  line.setAttribute('x2',x2); line.setAttribute('y2',y2);
+  line.setAttribute('class','star-line');
+  const len = Math.hypot(x2-x1, y2-y1);
+  line.style.strokeDasharray = len;
+  line.style.strokeDashoffset = len;
+  linesGroup.appendChild(line);
+  lines.push(line);
+}
+
+const starsGroup = document.createElementNS(NS,'g');
+svg.appendChild(starsGroup);
+const starDots = [];
+positions.forEach(([x,y], i) => {
+  const g = document.createElementNS(NS,'g');
+  const circle = document.createElementNS(NS,'circle');
+  circle.setAttribute('cx',x); circle.setAttribute('cy',y); circle.setAttribute('r',5);
+  circle.setAttribute('class','star-dot future');
+  circle.dataset.index = i;
+  g.appendChild(circle);
+  starsGroup.appendChild(g);
+  starDots.push(circle);
+});
+
+/* ---------- state / flow ---------- */
+let index = 0; // current star to click
+let typeTimer = null;
+
+function typeInto(el, text, speed, onDone){
+  clearInterval(typeTimer);
+  el.innerHTML = '<span class="typed"></span><span class="cursor">&nbsp;</span>';
+  const typedEl = el.querySelector('.typed');
+  let i = 0;
+  typeTimer = setInterval(() => {
+    if(i < text.length){ typedEl.textContent += text[i]; i++; }
+    else{
+      clearInterval(typeTimer);
+      const c = el.querySelector('.cursor');
+      if(c) c.remove();
+      if(onDone) onDone();
+    }
+  }, speed);
+}
+
+function updateStars(){
+  starDots.forEach((dot, i) => {
+    dot.classList.remove('future','lit','current');
+    if(i < index){ dot.classList.add('lit'); }
+    else if(i === index){ dot.classList.add('current'); }
+    else{ dot.classList.add('future'); }
+  });
+}
+
+function revealLine(i){
+  // reveals the line connecting star i-1 to star i
+  if(i <= 0) return;
+  const line = lines[i-1];
+  requestAnimationFrame(() => { line.style.strokeDashoffset = 0; });
+}
+
+document.getElementById('progressLabel').textContent = 'Star 1 of 19';
+
+starsGroup.addEventListener('click', (e) => {
+  const target = e.target.closest('circle');
+  if(!target) return;
+  const i = parseInt(target.dataset.index, 10);
+  if(i !== index) return;
+
+  target.classList.remove('current');
+  target.classList.add('lit');
+  revealLine(i);
+
+  const card = document.getElementById('messageCard');
+  const isLast = (i === stars.length - 1);
+  card.innerHTML = `
+    <div class="message-label">⭐ Star ${i+1}</div>
+    <div class="message-text" id="msgText"></div>
+    <button class="next-btn hidden" id="starNextBtn">${isLast ? 'Complete the Constellation ✨' : 'Next Star →'}</button>
+  `;
+  const msgEl = document.getElementById('msgText');
+  const btn = document.getElementById('starNextBtn');
+  typeInto(msgEl, stars[i], 16, () => btn.classList.remove('hidden'));
+  msgEl.onclick = () => {
+    clearInterval(typeTimer);
+    msgEl.textContent = stars[i];
+    btn.classList.remove('hidden');
+  };
+
+  btn.addEventListener('click', () => {
+    if(isLast){
+      goToFinale();
+    } else {
+      index++;
+      document.getElementById('progressLabel').textContent = 'Star ' + (index+1) + ' of 19';
+      updateStars();
+      const c = document.getElementById('messageCard');
+      c.innerHTML = '<div class="hint">Tap the glowing star to reveal its message.</div>';
+    }
+  }, { once:true });
+});
+
+document.getElementById('startBtn').addEventListener('click', () => {
+  document.getElementById('introScreen').classList.add('hidden');
+  document.getElementById('mapScreen').classList.remove('hidden');
+  updateStars();
+});
+
+function goToFinale(){
+  document.getElementById('mapScreen').classList.add('hidden');
+  const finale = document.getElementById('finaleScreen');
+  finale.classList.remove('hidden');
+  const caption = document.getElementById('finaleCaption');
+  setTimeout(() => {
+    typeInto(caption, finaleText, 14, () => {
+      const heading = document.createElement('div');
+      heading.className = 'finale-heading';
+      heading.textContent = 'Happy Birthday, Prithinga.';
+      caption.after(heading);
+      const sub = document.createElement('div');
+      sub.className = 'finale-caption';
+      sub.textContent = 'Thank you for being one of the brightest constellations in my sky.';
+      heading.after(sub);
+      const tomorrow = document.createElement('div');
+      tomorrow.className = 'finale-tomorrow';
+      tomorrow.textContent = '✨ Tomorrow, another piece of our story will appear.';
+      sub.after(tomorrow);
+      const nav = document.createElement('div');
+      nav.className = 'nav-links';
+      nav.innerHTML = '<a class="nav-link" href="time-capsule-19.html">← Back to Day 3</a>';
+      tomorrow.after(nav);
+    });
+  }, 900);
+}
+</script>
+
+</body>
+</html>
