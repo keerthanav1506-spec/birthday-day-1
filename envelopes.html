@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Envelopes — Prithinga's Birthday</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Quicksand:wght@400;500;600;700&display=swap');
+
+:root{
+  --night-1: #0B1130;
+  --night-2: #161B3D;
+  --night-3: #232A57;
+  --gold: #F2C14E;
+  --gold-soft: #FFE4A3;
+  --gold-dim: #6B5E3A;
+  --ink: #EDEBFB;
+  --ink-soft: #A8AAD1;
+  --paper: #F7EEDA;
+  --paper-shadow: #D8C69C;
+  --wax: #A8332B;
+  --wax-dark: #7A2620;
+}
+
+*{ box-sizing:border-box; }
+
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(242,193,78,0.06) 0%, transparent 45%),
+    radial-gradient(ellipse at 80% 85%, rgba(242,193,78,0.05) 0%, transparent 50%),
+    linear-gradient(180deg, var(--night-1) 0%, var(--night-2) 55%, var(--night-3) 100%);
+  font-family:'Quicksand', sans-serif;
+  color: var(--ink);
+  overflow-x:hidden;
+}
+
+.twinkle{
+  position:fixed;
+  border-radius:50%;
+  background:#fff;
+  opacity:0.35;
+  animation: twinkle 3.5s ease-in-out infinite;
+  pointer-events:none;
+  z-index:0;
+}
+@keyframes twinkle{ 0%,100%{opacity:0.15;} 50%{opacity:0.6;} }
+
+.wrap{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding: 40px 20px;
+  position:relative;
+  z-index:2;
+}
+
+.screen{ display:flex; flex-direction:column; align-items:center; width:100%; max-width:480px; }
+.hidden{ display:none !important; }
+
+.eyebrow{
+  font-size:12.5px;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color: var(--gold);
+  font-weight:700;
+  margin-bottom:16px;
+  text-align:center;
+}
+
+/* ============ INTRO ============ */
+.intro-title{
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-weight:600;
+  font-size:clamp(24px, 5vw, 34px);
+  text-align:center;
+  color: var(--gold-soft);
+  margin: 0 0 18px 0;
+  text-shadow: 0 0 18px rgba(242,193,78,0.25);
+}
+.intro-text{
+  max-width: 400px;
+  text-align:center;
+  font-size:15px;
+  color: var(--ink-soft);
+  line-height:1.85;
+  margin-bottom: 34px;
+}
+.intro-text em{ color: var(--ink); font-style:italic; }
+
+.big-btn{
+  font-family:'Quicksand', sans-serif;
+  font-weight:700;
+  font-size:16px;
+  color: var(--night-1);
+  background: linear-gradient(135deg, var(--gold-soft) 0%, var(--gold) 100%);
+  border:none;
+  border-radius: 999px;
+  padding: 15px 36px;
+  cursor:pointer;
+  box-shadow: 0 12px 30px -8px rgba(242,193,78,0.45);
+  transition: transform 0.2s ease;
+  letter-spacing:0.02em;
+}
+.big-btn:hover{ transform: translateY(-2px); }
+.big-btn:active{ transform: translateY(0) scale(0.97); }
+
+/* intro envelope illustration */
+.intro-stack{ position:relative; width:180px; height:120px; margin-bottom:28px; }
+.stack-env{
+  position:absolute; left:50%; top:0;
+  width:170px; height:110px;
+  background: linear-gradient(160deg, var(--paper) 0%, #EDE0BE 100%);
+  border-radius:6px;
+  box-shadow: 0 10px 24px -8px rgba(0,0,0,0.5);
+}
+.stack-env:nth-child(1){ transform: translateX(-50%) rotate(-9deg) translateY(10px); opacity:0.55; }
+.stack-env:nth-child(2){ transform: translateX(-50%) rotate(5deg) translateY(5px); opacity:0.75; }
+.stack-env:nth-child(3){ transform: translateX(-50%) rotate(-2deg); opacity:1; z-index:2; }
+.stack-env:nth-child(3)::before{
+  content:'';
+  position:absolute; inset:0;
+  background: linear-gradient(135deg, transparent 49.5%, rgba(0,0,0,0.08) 50%, transparent 50.5%),
+              linear-gradient(-135deg, transparent 49.5%, rgba(0,0,0,0.08) 50%, transparent 50.5%);
+}
+.stack-env .seal{
+  position:absolute; left:50%; top:50%;
+  width:26px; height:26px;
+  transform: translate(-50%,-50%);
+  background: radial-gradient(circle at 35% 30%, #C24A40, var(--wax) 55%, var(--wax-dark) 100%);
+  border-radius:50%;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+}
+
+/* progress */
+.progress-label{
+  font-family:'Quicksand', sans-serif;
+  font-size:13px;
+  font-weight:700;
+  color: var(--ink-soft);
+  letter-spacing:0.06em;
+  margin-bottom: 26px;
+}
+
+/* ============ MAIN — ENVELOPE ============ */
+.desk{
+  width: min(88vw, 300px);
+  position:relative;
+  perspective: 1200px;
+}
+
+.envelope{
+  position:relative;
+  width:100%;
+  aspect-ratio: 3 / 2;
+  cursor:pointer;
+}
+
+.env-body{
+  position:absolute; inset:0;
+  background: linear-gradient(160deg, var(--paper) 0%, #EADFBB 100%);
+  border-radius:8px;
+  box-shadow: 0 18px 40px -12px rgba(0,0,0,0.55);
+  overflow:hidden;
+}
+.env-body::after{
+  content:'';
+  position:absolute; inset:0;
+  background:
+    linear-gradient(115deg, transparent 48%, rgba(0,0,0,0.06) 50%, transparent 52%),
+    linear-gradient(245deg, transparent 48%, rgba(0,0,0,0.06) 50%, transparent 52%);
+}
+
+.env-flap{
+  position:absolute;
+  top:0; left:0; width:100%; height:62%;
+  background: linear-gradient(160deg, #EFE4C4 0%, var(--paper-shadow) 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  transition: transform 0.7s cubic-bezier(.6,.05,.25,1);
+  z-index:3;
+  box-shadow: 0 6px 14px -6px rgba(0,0,0,0.3);
+}
+.envelope.open .env-flap{ transform: rotateX(180deg); }
+
+.env-seal{
+  position:absolute; left:50%; top:44%;
+  width:44px; height:44px;
+  transform: translate(-50%,-50%);
+  background: radial-gradient(circle at 35% 30%, #C24A40, var(--wax) 55%, var(--wax-dark) 100%);
+  border-radius:50%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.45);
+  z-index:4;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-size:15px;
+  color: rgba(255,255,255,0.75);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.envelope.open .env-seal{ opacity:0; transform: translate(-50%,-50%) scale(0.4); }
+
+.env-letter{
+  position:absolute;
+  left:8%; width:84%;
+  bottom:6%;
+  height:70%;
+  background: var(--paper);
+  border-radius:4px;
+  box-shadow: 0 -6px 16px -6px rgba(0,0,0,0.25);
+  transform: translateY(0);
+  transition: transform 0.8s cubic-bezier(.2,.7,.3,1);
+  z-index:2;
+}
+.envelope.open .env-letter{ transform: translateY(-58%); }
+
+.env-glow{
+  position:absolute; inset:-14px;
+  border-radius:16px;
+  background: radial-gradient(ellipse at center, rgba(242,193,78,0.35), transparent 70%);
+  opacity:0;
+  animation: none;
+  pointer-events:none;
+  z-index:0;
+}
+.envelope.pulse .env-glow{ animation: seal-pulse 1.6s ease-in-out infinite; }
+@keyframes seal-pulse{ 0%,100%{opacity:0.25;} 50%{opacity:0.6;} }
+
+.tap-hint{
+  margin-top:22px;
+  font-size:13px;
+  color: var(--ink-soft);
+  text-align:center;
+  opacity:0.85;
+}
+
+/* message card once revealed */
+.message-card{
+  margin-top: 30px;
+  width:100%;
+  background: rgba(237,235,251,0.05);
+  border: 1px solid rgba(242,193,78,0.25);
+  border-radius: 20px;
+  padding: 28px 26px;
+  text-align:center;
+  backdrop-filter: blur(2px);
+  animation: cardIn 0.5s ease;
+  min-height: 150px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+@keyframes cardIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;} }
+
+.message-label{
+  font-family:'Quicksand', sans-serif;
+  font-size:12px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color: var(--gold);
+  font-weight:700;
+  margin-bottom:6px;
+}
+.message-sub{
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-size:15px;
+  color: var(--ink-soft);
+  margin-bottom:14px;
+}
+.message-text{
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-size: clamp(16px, 3.4vw, 19px);
+  line-height:1.75;
+  color: var(--ink);
+  white-space:pre-line;
+}
+.cursor{
+  display:inline-block;
+  width:2px;
+  background: var(--gold);
+  margin-left:2px;
+  animation: blink 0.8s steps(1) infinite;
+}
+@keyframes blink{ 50%{opacity:0;} }
+
+.next-btn{
+  margin-top: 26px;
+  font-family:'Quicksand', sans-serif;
+  font-weight:700;
+  font-size:15px;
+  color: var(--night-1);
+  background: linear-gradient(135deg, var(--gold-soft) 0%, var(--gold) 100%);
+  border:none;
+  border-radius: 999px;
+  padding: 13px 30px;
+  cursor:pointer;
+  box-shadow: 0 10px 24px -8px rgba(242,193,78,0.5);
+  transition: transform 0.2s ease;
+}
+.next-btn:hover{ transform: translateY(-2px); }
+
+/* ============ FINALE ============ */
+.finale-stage{
+  width: min(80vw, 260px);
+  position:relative;
+  margin-bottom: 18px;
+}
+.finale-seal{
+  width:90px; height:90px;
+  margin: 0 auto;
+  border-radius:50%;
+  background: radial-gradient(circle at 35% 30%, #D4574B, var(--wax) 55%, var(--wax-dark) 100%);
+  box-shadow: 0 10px 30px -6px rgba(162,51,43,0.6);
+  opacity:0;
+  animation: sealIn 0.9s ease forwards 0.2s, sealCrack 1.4s ease forwards 1.1s;
+  position:relative;
+}
+@keyframes sealIn{ from{opacity:0; transform:scale(0.6);} to{opacity:1; transform:scale(1);} }
+@keyframes sealCrack{ 0%{filter:none;} 100%{filter:brightness(1.3);} }
+
+.finale-caption{
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-size: clamp(17px, 3.6vw, 20px);
+  line-height:1.85;
+  color: var(--ink);
+  text-align:center;
+  white-space:pre-line;
+  margin-top: 12px;
+}
+
+.finale-heading{
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-weight:600;
+  font-size: clamp(20px, 4vw, 26px);
+  color: var(--gold-soft);
+  text-align:center;
+  margin: 22px 0 8px 0;
+}
+
+.nav-links{
+  margin-top: 26px;
+  display:flex;
+  gap:20px;
+}
+.nav-link{
+  font-size:12px;
+  color: var(--ink-soft);
+  text-decoration:underline;
+  opacity:0.75;
+}
+.nav-link:hover{ opacity:1; }
+
+@media (max-width:420px){
+  .message-card{ padding:22px 18px; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap" id="wrap">
+
+  <!-- SCREEN 1 — INTRO -->
+  <div class="screen" id="introScreen">
+    <div class="eyebrow">Day Five · The Envelopes</div>
+    <div class="intro-stack">
+      <div class="stack-env"></div>
+      <div class="stack-env"></div>
+      <div class="stack-env"><div class="seal"></div></div>
+    </div>
+    <div class="intro-title">✨ Nineteen letters, one for every day. ✨</div>
+    <div class="intro-text">
+      Each envelope was sealed on a different day, in a different mood.<br><br>
+      Some are silly. Some are quiet. Some are just <em>thank you</em>, said in a different way.<br><br>
+      Open them one at a time.
+    </div>
+    <button class="big-btn" id="startBtn">Break the First Seal 💌</button>
+  </div>
+
+  <!-- SCREEN 2 — ENVELOPE -->
+  <div class="screen hidden" id="envScreen">
+    <div class="progress-label" id="progressLabel">Envelope 1 of 19</div>
+
+    <div class="desk">
+      <div class="envelope pulse" id="envelope">
+        <div class="env-glow"></div>
+        <div class="env-letter"></div>
+        <div class="env-body"></div>
+        <div class="env-flap"></div>
+        <div class="env-seal">✦</div>
+      </div>
+    </div>
+    <div class="tap-hint" id="tapHint">Tap the envelope to open it.</div>
+
+    <div class="message-card hidden" id="messageCard"></div>
+  </div>
+
+  <!-- SCREEN 3 — FINALE -->
+  <div class="screen hidden" id="finaleScreen">
+    <div class="eyebrow">All Nineteen, Opened</div>
+    <div class="finale-stage">
+      <div class="finale-seal"></div>
+    </div>
+    <div class="finale-caption" id="finaleCaption"></div>
+  </div>
+
+</div>
+
+<script>
+/* ---------- background twinkles ---------- */
+(function(){
+  const wrap = document.getElementById('wrap');
+  for(let i=0;i<24;i++){
+    const t = document.createElement('div');
+    t.className = 'twinkle';
+    const size = Math.random()*2 + 1;
+    t.style.width = size + 'px';
+    t.style.height = size + 'px';
+    t.style.left = (Math.random()*100) + 'vw';
+    t.style.top = (Math.random()*100) + 'vh';
+    t.style.animationDelay = (Math.random()*3.5) + 's';
+    wrap.appendChild(t);
+  }
+})();
+
+/* ---------- content ---------- */
+const letters = [
+  { title: "The Beginning", body: `If someone had told me that a simple handshake at EC Meet would become one of my favorite memories, I would've laughed. You walked into my life as someone new, and somehow, without making a big announcement, you became someone important.\n\nThank you for saying "Hi" first. Looking back, I don't think it was just networking anymore — it was the beginning of a friendship I didn't know I needed.` },
+  { title: "The Little Things", body: `People think friendships are built by grand gestures, but I think they're built by tiny moments no one else notices. A hand offered while crossing an obstacle. Watching over my white dress in the rain. Carrying my bag without making me ask twice.\n\nYou probably forgot most of them. I didn't. Thank you for showing me that kindness can be quiet and still leave the loudest impact.` },
+  { title: "Staying", body: `There was a time when everything felt heavy, confusing, and lonely. I wasn't the easiest person to be around, yet you stayed. You didn't try to fix everything — you simply refused to let me face it alone.\n\nSometimes the greatest gift isn't advice or solutions. Sometimes it's just a person saying, "I'm here." You gave me that gift.` },
+  { title: "Safe", body: `There are people we enjoy talking to, and then there are people who feel like home. Somewhere along the way, you quietly became one of those people for me. I never have to measure my words or hide my thoughts around you.\n\nThank you for creating a friendship where I can simply be myself. That's rarer than people realize.` },
+  { title: "Laughter", body: `I don't even remember every joke we've shared, but I remember how often you've made me laugh. Somehow, ordinary internship days became stories worth remembering because you were there.\n\nI hope we never lose that. Life will get busier, but I hope we always find something ridiculous enough to laugh about together.` },
+  { title: "My Favorite Coincidence", body: `Meeting you wasn't part of my plan. Becoming this close definitely wasn't part of my plan. Yet here we are, and I honestly can't imagine these past months without you.\n\nYou're one of my favorite unexpected chapters, and I'm so grateful life decided to write you into my story.` },
+  { title: "The Giver", body: `I've spent most of my life being the one who reaches out, helps first, and gives more than I expect back. Then you came along and quietly did those things for me.\n\nI don't think you realize how much that meant. Thank you for reminding me that it's okay to be cared for too.` },
+  { title: "Chaos", body: `Our friendship is equal parts meaningful conversations and complete nonsense. One minute we're talking about life, the next we're laughing over something that doesn't even make sense.\n\nI think that's my favorite kind of friendship — the one that can hold both depth and chaos at the same time.` },
+  { title: "Thank You", body: `There are so many little "thank yous" I never said out loud. Thank you for waiting. Thank you for checking on me. Thank you for noticing when something felt off. Thank you for being patient.\n\nIf gratitude could be counted, mine would probably never end.` },
+  { title: "Your Heart", body: `One thing I admire most about you is your heart. You help people naturally, not because you expect praise, but because it's simply who you are.\n\nPlease never let the world convince you to become less kind. People like you make it softer for everyone else.` },
+  { title: "Growing", body: `We're both still figuring life out. We'll make mistakes, change our minds, and become different versions of ourselves.\n\nI just hope that years from now, we'll smile at these memories and be proud of how far we've come.` },
+  { title: "My Wish", body: `If I could choose one thing for your future, it wouldn't be success or money. I'd choose peace. The kind that lets you sleep without worry and smile without pretending.\n\nBecause someone with a heart like yours deserves a gentle life.` },
+  { title: "Time", body: `It's funny how people say friendships take years to become real. Ours proved that time isn't always the deciding factor.\n\nSometimes, all it takes is consistency, kindness, and choosing to stay.` },
+  { title: "Bright Days", body: `Even the most ordinary afternoons somehow became brighter because you were part of them. It's amazing how much difference one person can make without even trying.\n\nThank you for turning simple days into beautiful memories.` },
+  { title: "Butterfly", body: `Butterflies don't rush their transformation. They become beautiful slowly, quietly, and patiently.\n\nI hope you always remember that your own journey doesn't need to be rushed either. You're becoming someone wonderful one day at a time.` },
+  { title: "The Future", body: `I don't know where life will take us after college. Different cities, different jobs, different routines... life has a funny way of changing plans.\n\nBut I hope one thing never changes — that whenever we meet again, it still feels like no time has passed.` },
+  { title: "Proud", body: `I hope you become everything you've ever dreamed of becoming. Not because I want to say, "I knew her," but because I know how much happiness you deserve.\n\nI'll always be quietly cheering for you.` },
+  { title: "Today", body: `Out of all the days this year, today feels extra special because it's yours. The world became a little brighter nineteen years ago, even if it didn't realize it at the time.\n\nHappy Birthday to someone who unknowingly made my year brighter too.` },
+  { title: "Until Tomorrow", body: `If you've opened every envelope until this one, then you've already read nineteen tiny pieces of my heart. None of them are exaggerated — they're simply things I wanted you to know before life gets busy and we forget to say them.\n\nThank you for every laugh, every conversation, every quiet act of kindness, and every memory we've made. Happy 19th Birthday, Thala. Whatever tomorrow brings, I'm really glad our paths crossed.` }
+];
+
+const finaleText = `Nineteen envelopes.
+Nineteen days.
+Nineteen small, true things.
+
+None of them were exaggerated.
+They were just things I wanted you to know
+before life got busy
+and we forgot to say them.`;
+
+/* ---------- state / flow ---------- */
+let index = 0;
+let typeTimer = null;
+
+function typeInto(el, text, speed, onDone){
+  clearInterval(typeTimer);
+  el.innerHTML = '<span class="typed"></span><span class="cursor">&nbsp;</span>';
+  const typedEl = el.querySelector('.typed');
+  let i = 0;
+  typeTimer = setInterval(() => {
+    if(i < text.length){ typedEl.textContent += text[i]; i++; }
+    else{
+      clearInterval(typeTimer);
+      const c = el.querySelector('.cursor');
+      if(c) c.remove();
+      if(onDone) onDone();
+    }
+  }, speed);
+}
+
+document.getElementById('startBtn').addEventListener('click', () => {
+  document.getElementById('introScreen').classList.add('hidden');
+  document.getElementById('envScreen').classList.remove('hidden');
+});
+
+const envelope = document.getElementById('envelope');
+envelope.addEventListener('click', () => {
+  if(envelope.classList.contains('open')) return;
+  envelope.classList.remove('pulse');
+  envelope.classList.add('open');
+  document.getElementById('tapHint').classList.add('hidden');
+
+  setTimeout(() => {
+    const letter = letters[index];
+    const isLast = (index === letters.length - 1);
+    const card = document.getElementById('messageCard');
+    card.classList.remove('hidden');
+    card.innerHTML = `
+      <div class="message-label">💌 Envelope ${index+1}</div>
+      <div class="message-sub">${letter.title}</div>
+      <div class="message-text" id="msgText"></div>
+      <button class="next-btn hidden" id="letterNextBtn">${isLast ? 'Close the Last Envelope ✨' : 'Seal It & Open the Next →'}</button>
+    `;
+    const msgEl = document.getElementById('msgText');
+    const btn = document.getElementById('letterNextBtn');
+    typeInto(msgEl, letter.body, 14, () => btn.classList.remove('hidden'));
+    msgEl.onclick = () => {
+      clearInterval(typeTimer);
+      msgEl.textContent = letter.body;
+      btn.classList.remove('hidden');
+    };
+
+    btn.addEventListener('click', () => {
+      if(isLast){
+        goToFinale();
+      } else {
+        index++;
+        document.getElementById('progressLabel').textContent = 'Envelope ' + (index+1) + ' of 19';
+        card.classList.add('hidden');
+        card.innerHTML = '';
+        envelope.classList.remove('open');
+        envelope.classList.add('pulse');
+        document.getElementById('tapHint').classList.remove('hidden');
+      }
+    }, { once:true });
+  }, 750);
+});
+
+function goToFinale(){
+  document.getElementById('envScreen').classList.add('hidden');
+  const finale = document.getElementById('finaleScreen');
+  finale.classList.remove('hidden');
+  const caption = document.getElementById('finaleCaption');
+  setTimeout(() => {
+    typeInto(caption, finaleText, 16, () => {
+      const heading = document.createElement('div');
+      heading.className = 'finale-heading';
+      heading.textContent = 'Happy Birthday, Prithinga.';
+      caption.after(heading);
+      const nav = document.createElement('div');
+      nav.className = 'nav-links';
+      nav.innerHTML = '<a class="nav-link" href="constellation.html">← Back to Day 4</a>';
+      heading.after(nav);
+    });
+  }, 1300);
+}
+</script>
+
+</body>
+</html>
